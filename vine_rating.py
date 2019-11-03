@@ -6,10 +6,8 @@ out = []
 
 fname = input('Provide file name: ')
 with open(fname, 'r') as f:
-    line = ' '
-    while line != '':
-        line = f.readline().rstrip()
-        res = input(f'(#/m/d) {line}: ') # Rate, modify, delete line
+    for line in f:
+        res = input(f'(#/m/d) {line.rstrip()}: ') # Rate, modify, delete line
         if res == 'm':
             newline = input('Enter new line: ')
             rating = input('Enter rating: ')
@@ -17,7 +15,7 @@ with open(fname, 'r') as f:
         elif res == 'd':
             continue
         else:
-            out.append([res, line])
+            out.append([res, line.rstrip()])
 
 with open(f'{fname[:-4]}.csv', 'w+') as f:
     csvWriter = csv.writer(f, delimiter=',')
