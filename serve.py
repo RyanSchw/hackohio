@@ -209,10 +209,11 @@ class File(object):
         # except:
         #     print("Failed to parse video")
         # Now done with threading so the upload box can be destructed
-        worker = threading.Thread(target=workerThread, name="worker", args=(routeFilename,))
-        worker.daemon = True
-        worker.run()
-        print("Worker is running")
+        # worker = threading.Thread(target=workerThread, name="worker", args=(routeFilename,))
+        # worker.daemon = True
+        # worker.run()
+        # print("Worker is running")
+        workerThread(routeFilename)
         # build and send response.
         response = {}
         response["link"] = routeFilename
@@ -491,7 +492,7 @@ class FlaskAdapter(BaseAdapter):
         file = self.request.files[fieldname]
         file.save(fullNamePath)
 
-@app.route("/response")
+@app.route('/response', methods=['GET', 'POST'])
 def respond():
     speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
     audio_config = speechsdk.audio.AudioConfig(filename="temp.wav")
@@ -499,8 +500,12 @@ def respond():
     result = speech_recognizer.recognize_once()
     print("Captured text: " + result.text)
     similarity = runML(result.text)
-    print(similarity)
-    return render_template('response.html')
+    print('\n\n\n\n\n' + str(int(similarity[0]) + 1) + '\n\n\n\n\n')
+    try:
+        return render_template('response.html', score=int(similarity[0]) + 1)
+    except:
+        print("Failed to return render process")
+
 
 def workerThread(file):
     filePath = "public/" + file.strip("/public/")

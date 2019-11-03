@@ -26,16 +26,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-2.css') }}">
 	</head>
 	<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
-    
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-         <ul>
-            {% for message in messages %}
-            <li<{{ message }}</li>
-            {% endfor %}
-         </ul>
-      {% endif %}
-    {% endwith %}
 
     <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
       <div class="container">
@@ -70,7 +60,24 @@
           <div class="col-md-1">
           </div>
           <div class="col-md-5 relative align-self-center">
-            <img src="{{ url_for('static', filename='images/vineLogo.jpeg') }}" alt="Vine"> 
+
+
+            {% if score>2 %}
+                <h2 class="heading mb-3">Great Work</h2>
+                <div class="sub-heading"></div>
+                    <p class="mb-4" style="color:white">The data is in. Your video matches the vines of the golden age!</p>
+                </div>
+            {% elif score>1 %}
+                <h2 class="heading mb-3">So Close!</h2>
+                <div class="sub-heading"></div>
+                    <p class="mb-4" style="color:white">Your video almost classifies as vine worthy. A little more effort and you've got it!</p>
+                </div>
+            {% else %}
+                <h2 class="heading mb-3">Aww Snap!</h2>
+                <div class="sub-heading"></div>
+                    <p class="mb-4" style="color:white">You weren't even close to vine level. Try again next time :/</p>
+                </div>
+            {% endif %}
           </div>
         </div>
       </div>
