@@ -25,6 +25,7 @@ We took the following steps to create the classifier:
 ![learning rate finder](learning_rate_finder.png)
 
 In the end, we were able to train the model to the following specs:
+
 epoch|train_loss|valid_loss|accuracy|time
 ---|---|---|---|---
 0|1.308767|1.084773|0.442105|00:01
